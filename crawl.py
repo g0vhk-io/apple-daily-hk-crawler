@@ -13,7 +13,7 @@ def fetch(item):
         root = etree.HTML(r.text)
         item['title'] = root.xpath("//table[@class=\"LinkTable\"]/tr/td/h1")[0].text.strip()
         item['image'] = root.xpath("//meta[@property=\"og:image\"]")[0].attrib['content'].strip()
-        item['text'] = ''.join([s.strip() for s in root.xpath("//div[@id=\"masterContent\"]")[0].itertext()]).strip()
+        item['text'] = re.sub('(please only add this icon at the end of the article)','',''.join([s.strip() for s in root.xpath("//div[@id=\"masterContent\"]")[0].itertext()]).strip())
     except Exception as e:
         print("cannot parse %s" % (item['link']))
         raise
